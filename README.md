@@ -1,4 +1,4 @@
-# AgentOps-Pay
+# Boooth
 
 An autonomous AI agent that pays real providers for real data, per call, on
 [BOT Chain](https://www.botchain.ai/) — and logs the reasoning behind every
