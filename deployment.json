@@ -1,0 +1,7 @@
+{
+  "network": "botTestnet",
+  "chainId": 968,
+  "registry": "0xA4f3540Af7d5f16AdF5518765C37d1766Aef5b12",
+  "payPerCall": "0x1bD37B2316f51059096E91F26313cba9DB949f32",
+  "deployedAt": "2026-07-04T16:12:06.508Z"
+}
