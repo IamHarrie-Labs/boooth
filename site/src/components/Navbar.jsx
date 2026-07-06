@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
 import { Plus } from "lucide-react";
 
 function BrandMark() {
@@ -33,12 +32,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <motion.nav
-      className="navbar"
-      initial={{ y: -16, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-    >
+    <nav className="navbar fadeDown">
       <div className="navLeft">
         <a href="/" className="brand">
           <BrandMark />
@@ -58,30 +52,20 @@ export default function Navbar() {
             <span className="menuButtonText">Menu</span>
           </button>
 
-          <AnimatePresence>
-            {open && (
-              <motion.div
-                className="menuPanel"
-                initial={{ opacity: 0, y: -6 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={{ duration: 0.15 }}
+          <div className={`menuPanel ${open ? "menuPanelOpen" : ""}`}>
+            {MENU_LINKS.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                target={link.external ? "_blank" : undefined}
+                rel={link.external ? "noopener noreferrer" : undefined}
+                className="menuPanelLink"
+                onClick={() => setOpen(false)}
               >
-                {MENU_LINKS.map((link) => (
-                  <a
-                    key={link.label}
-                    href={link.href}
-                    target={link.external ? "_blank" : undefined}
-                    rel={link.external ? "noopener noreferrer" : undefined}
-                    className="menuPanelLink"
-                    onClick={() => setOpen(false)}
-                  >
-                    {link.label}
-                  </a>
-                ))}
-              </motion.div>
-            )}
-          </AnimatePresence>
+                {link.label}
+              </a>
+            ))}
+          </div>
         </div>
 
         <div className="tagsPill">
@@ -96,6 +80,6 @@ export default function Navbar() {
         </span>
         <span className="navRightLabel">BOT Chain</span>
       </a>
-    </motion.nav>
+    </nav>
   );
 }

@@ -28,6 +28,58 @@ button {
   cursor: pointer;
 }
 
+/* Plain CSS entrance animations. Deliberately not using a JS animation
+   library for anything that must run on mount: it's guaranteed to run
+   regardless of bundler quirks, unlike an imperative animation engine whose
+   ticker can silently fail to advance in a given production build. */
+@keyframes fadeDownIn {
+  from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeUpIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bgFadeInKeyframes {
+  from {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.fadeDown {
+  opacity: 0;
+  animation: fadeDownIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.fadeUp {
+  opacity: 0;
+  animation: fadeUpIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.bgFadeIn {
+  opacity: 0;
+  animation: bgFadeInKeyframes 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
 /* ---------- Hero page ---------- */
 
 .hero {
@@ -123,6 +175,18 @@ button {
   display: flex;
   flex-direction: column;
   gap: 2px;
+  opacity: 0;
+  transform: translateY(-6px);
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
+}
+
+.menuPanelOpen {
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
+  pointer-events: auto;
 }
 
 .menuPanelLink {
