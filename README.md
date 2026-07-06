@@ -4,8 +4,6 @@ An autonomous AI agent that pays real providers for real data, per call, on
 [BOT Chain](https://www.botchain.ai/) — and logs the reasoning behind every
 purchase on-chain, in the same transaction as the payment.
 
-Built for the **BOT Chain Builder Challenge #1** (AI Agent track).
-
 Every few seconds the agent:
 1. Fetches a live reading from one or more registered providers
 2. Asks Claude whether that specific reading is worth paying for (or falls back to a threshold rule if no API key is set)
