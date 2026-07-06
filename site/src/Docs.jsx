@@ -16,17 +16,17 @@ export default function Docs() {
       <div className="docsShell">
         <h1 className="docsTitle">How Boooth works</h1>
         <p className="docsIntro">
-          Boooth is an autonomous agent that pays real providers for real data on BOT Chain, and writes down why it paid, right there on the chain, every single time. There is nothing to sign up for. It is all open contracts you can read, run, or plug into yourself.
+          Boooth connects real machines to an autonomous agent. Devices sell their live data, an agent decides what is worth buying, and every payment, along with the reasoning behind it, lands onchain on BOT Chain. There is nothing to sign up for. It is all open contracts you can read, run, or plug into yourself.
         </p>
 
         <section className="docsSection">
           <div className="docsSectionLabel">Overview</div>
-          <h2 className="docsSectionTitle">What it actually does</h2>
+          <h2 className="docsSectionTitle">Real machines, sold as data</h2>
           <p className="docsBody">
-            Every few seconds, the agent checks in on one or more data providers. Each provider is selling something small, like a live reading of a machine's memory use, or a live check of how healthy the chain's own network is right now. The agent looks at the reading, decides whether it is worth the asking price, and if so, pays for it. Both the payment and the reason for it land in the same transaction.
+            This is a small DePIN loop. A device, right now a laptop, registers itself as a data provider and starts selling readings of things that are actually true about it, like how loaded its memory is, or how healthy the chain's own network looks from where it sits. Every few seconds, an agent checks in on one or more of these providers, looks at the reading, and decides whether it is worth the asking price. If it is, the agent pays for it and writes down why, both in the same transaction.
           </p>
           <p className="docsBody">
-            The deciding part can be a real call to Claude, reasoning over the actual numbers in the reading, or a simple threshold rule if you would rather not wire up an API key. Either way, the outcome, and the reasoning behind it, ends up permanently on the chain.
+            The deciding part can be a real call to Claude, reasoning over the actual numbers in the reading, or a simple threshold rule if you would rather not wire up an API key. Either way, the outcome, and the reasoning behind it, ends up permanently on the chain, tied to real hardware, not a simulation.
           </p>
         </section>
 
@@ -131,18 +131,6 @@ await registry.registerProvider(
             </a>
             .
           </p>
-        </section>
-
-        <section className="docsSection">
-          <div className="docsSectionLabel">Along the way</div>
-          <h2 className="docsSectionTitle">What building this surfaced</h2>
-          <p className="docsBody">
-            A couple of things came up while building against a brand new chain, both submitted separately as feedback.
-          </p>
-          <ul className="docsList">
-            <li>The developer docs return an error to non browser clients, including AI coding agents, which is a strange thing to hit on a chain built for AI agents.</li>
-            <li>The testnet RPC occasionally drops requests under light, steady use, then recovers on its own.</li>
-          </ul>
         </section>
       </div>
     </div>

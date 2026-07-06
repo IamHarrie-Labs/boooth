@@ -23,6 +23,17 @@ const REGISTRY_ABI = [
   "function getProvider(uint256 id) view returns (tuple(address payoutAddress, string name, string kind, uint256 pricePerCall, bool active))",
 ];
 
+// The RPC occasionally drops a connection mid request (see the bounty note
+// in the README). That surfaces as an unhandled rejection from inside
+// ethers' own socket handling, outside any of our try/catch blocks, and
+// would otherwise kill the whole process. Log it and keep ticking instead.
+process.on("unhandledRejection", (err) => {
+  console.error("unhandled rejection (continuing):", err?.message || err);
+});
+process.on("uncaughtException", (err) => {
+  console.error("uncaught exception (continuing):", err?.message || err);
+});
+
 async function main() {
   const provider = new ethers.JsonRpcProvider(RPC_URL);
   const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
