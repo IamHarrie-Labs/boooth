@@ -1,7 +1,7 @@
 // Autonomous agent: every tick, it fetches a real reading from each
-// registered device endpoint, asks Claude whether that specific reading is
+// registered device endpoint, asks an LLM whether that specific reading is
 // worth paying for, then pays the provider and logs both the payment and
-// the model's reasoning on-chain in a single transaction.
+// the model's reasoning onchain in a single transaction.
 require("dotenv").config();
 const { ethers } = require("ethers");
 const { decideWithLLM } = require("./decide");
@@ -23,10 +23,10 @@ const REGISTRY_ABI = [
   "function getProvider(uint256 id) view returns (tuple(address payoutAddress, string name, string kind, uint256 pricePerCall, bool active))",
 ];
 
-// The RPC occasionally drops a connection mid request (see the bounty note
-// in the README). That surfaces as an unhandled rejection from inside
-// ethers' own socket handling, outside any of our try/catch blocks, and
-// would otherwise kill the whole process. Log it and keep ticking instead.
+// The RPC occasionally drops a connection mid request. That surfaces as an
+// unhandled rejection from inside ethers' own socket handling, outside any
+// of our try/catch blocks, and would otherwise kill the whole process.
+// Log it and keep ticking instead.
 process.on("unhandledRejection", (err) => {
   console.error("unhandled rejection (continuing):", err?.message || err);
 });
@@ -43,9 +43,13 @@ async function main() {
   const taskId = Date.now();
   let stepIndex = 0;
 
-  const usingLLM = Boolean(process.env.ANTHROPIC_API_KEY);
+  const engine = process.env.GROQ_API_KEY
+    ? `Groq (${process.env.GROQ_MODEL || "llama-3.3-70b-versatile"})`
+    : process.env.ANTHROPIC_API_KEY
+    ? `Anthropic (${process.env.ANTHROPIC_MODEL || "claude-haiku-4-5-20251001"})`
+    : "fallback threshold rule (no API key set)";
   console.log(`Agent ${wallet.address} starting task #${taskId}, ticking every ${TICK_MS}ms`);
-  console.log(`Decision engine: ${usingLLM ? "Claude (ANTHROPIC_API_KEY set)" : "fallback threshold rule (no ANTHROPIC_API_KEY)"}`);
+  console.log(`Decision engine: ${engine}`);
   console.log(`Watching ${DEVICE_URLS.length} provider(s): ${DEVICE_URLS.join(", ")}`);
 
   async function processProvider(deviceUrl) {
